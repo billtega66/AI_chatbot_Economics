@@ -1,0 +1,21 @@
+{
+    "income": 5000,
+    "expenses": [
+        {
+            "category": "Rent",
+            "amount": 1500
+        },
+        {
+            "category": "Utilities",
+            "amount": 300
+        },
+        {
+            "category": "Groceries",
+            "amount": 600
+        },
+        {
+            "category": "Transportation",
+            "amount": 200
+        }
+    ]
+}

@@ -1,0 +1,132 @@
+import React, { useState } from 'react';
+import { 
+  FaChartLine, 
+  FaNewspaper, 
+  FaCalculator, 
+  FaChartPie, 
+  FaBook, 
+  FaMoneyBillWave, 
+  FaLightbulb, 
+  FaClipboardList 
+} from 'react-icons/fa';
+import { motion } from 'framer-motion';
+
+// Define module types for type safety
+type ModuleType = {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+};
+
+const EconomicToolkitDashboard: React.FC = () => {
+  const [selectedModule, setSelectedModule] = useState<ModuleType | null>(null);
+
+  const modules: ModuleType[] = [
+    {
+      id: 'market-watchdog',
+      title: 'Market Watchdog',
+      description: 'Real-time stock market monitoring with customizable alerts and price tracking.',
+      icon: FaChartLine
+    },
+    {
+      id: 'news-digest',
+      title: 'News Digest',
+      description: 'Latest economic news headlines and real-time updates.',
+      icon: FaNewspaper
+    },
+    {
+      id: 'retirement-planner',
+      title: 'Retirement Planner',
+      description: 'Calculate potential retirement savings based on your financial inputs.',
+      icon: FaCalculator
+    },
+    {
+      id: 'scenario-simulator',
+      title: 'Scenario Simulator',
+      description: 'Economic scenario modeling with interest, inflation, and unemployment analysis.',
+      icon: FaChartPie
+    },
+    {
+      id: 'budget-planner',
+      title: 'Budget Planner',
+      description: 'Comprehensive expense tracking and budget optimization tool.',
+      icon: FaClipboardList
+    },
+    {
+      id: 'glossary-explainer',
+      title: 'Glossary Explainer',
+      description: 'Financial terms dictionary for complex economic concepts.',
+      icon: FaBook
+    },
+    {
+      id: 'investment-assistant',
+      title: 'Investment Assistant',
+      description: 'Personalized investment recommendations based on your profile.',
+      icon: FaMoneyBillWave
+    }
+  ];
+
+  const handleModuleSelect = (module: ModuleType) => {
+    setSelectedModule(module);
+  };
+
+  return (
+    <div className="min-h-screen bg-white text-black p-8">
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-yellow-500">Economic Toolkit</h1>
+        <p className="text-gray-600 mt-2">Comprehensive Financial Analysis Platform</p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {modules.map((module) => (
+          <motion.div
+            key={module.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`
+              bg-white 
+              border-2 
+              ${selectedModule?.id === module.id ? 'border-yellow-500' : 'border-gray-200'}
+              rounded-xl 
+              p-6 
+              shadow-md 
+              cursor-pointer 
+              transition-all 
+              duration-300 
+              hover:shadow-lg
+            `}
+            onClick={() => handleModuleSelect(module)}
+          >
+            <div className="flex items-center mb-4">
+              <module.icon className={`
+                mr-4 
+                text-3xl 
+                ${selectedModule?.id === module.id ? 'text-yellow-500' : 'text-gray-600'}
+              `} />
+              <h2 className="text-xl font-semibold">{module.title}</h2>
+            </div>
+            <p className="text-gray-500">{module.description}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {selectedModule && (
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-12 bg-gray-50 p-8 rounded-xl"
+        >
+          <h3 className="text-2xl font-bold text-yellow-500 mb-4 flex items-center">
+            <selectedModule.icon className="mr-4 text-2xl" />
+            {selectedModule.title} Details
+          </h3>
+          <p className="text-gray-700">{selectedModule.description}</p>
+          {/* Placeholder for future detailed module view */}
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default EconomicToolkitDashboard;

@@ -1,0 +1,3 @@
+Flask
+requests
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser

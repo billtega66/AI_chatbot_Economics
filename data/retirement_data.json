@@ -1,0 +1,7 @@
+{
+    "current_age": 30,
+    "retirement_age": 65,
+    "current_savings": 20000,
+    "annual_contribution": 10000,
+    "expected_rate_of_return": 0.05
+}
