@@ -64,7 +64,7 @@ const EconomicToolkitDashboard = () => {
       title: 'Retirement Planner',
       description: 'Plan your retirement effectively.',
       icon: FaCalculator,
-      // route: '/retirement-planner',
+      route: '/retirement',
     },
     {
       id: 'scenario-simulator',

@@ -4,6 +4,11 @@ import EconomicToolkitDashboard from './components/EconomicToolkitDashboard';
 import MarketWatchdog from './components/MarketWatchdog';
 import NewsDigest from './components/NewsDigest';
 import NewsDetail from './components/NewsDetail'; // Import the NewsDetail component
+// Import Retirement Planner components
+import RetirementPlanner from './components/RetirementPlanner';
+import RetirementDashboard from './components/RetirementDashboard';
+import RetirementPlans from './components/RetirementPlans';
+import RetirementResources from './components/RetirementResources';
 
 const App = () => {
   const [news, setNews] = useState([]); // Shared state for news data
@@ -28,6 +33,12 @@ const App = () => {
           path="/news_digest/data_:id"
           element={<NewsDetail news={news} />}
         />
+
+        {/* Retirement Planner Routes */}
+        <Route path="/retirement" element={<RetirementPlanner />} />
+        <Route path="/retirement/dashboard" element={<RetirementDashboard />} />
+        <Route path="/retirement/plans" element={<RetirementPlans />} />
+        <Route path="/retirement/resources" element={<RetirementResources />} />
 
         {/* Fallback Route */}
         <Route

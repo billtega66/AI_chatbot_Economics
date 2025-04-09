@@ -1,3 +1,11 @@
 Flask
 requests
+Jinja2
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+fastapi
+uvicorn
+faiss-cpu
+ollama
+sentence-transformers
+langchain
+jinja2

@@ -1,7 +1,118 @@
 {
-    "current_age": 30,
-    "retirement_age": 65,
-    "current_savings": 20000,
-    "annual_contribution": 10000,
-    "expected_rate_of_return": 0.05
+
+    "retirement_facts": {
+        "savings_rate": {
+            "optimal_rate": "The optimal retirement savings rate is typically between 10-15% of your annual income, depending on age and desired retirement lifestyle."
+        },
+        "inflation": {
+            "description": "The rate at which prices increase over time, eroding purchasing power",
+            "average_rate": 0.025,
+            "impact": "Retirement savings need to account for inflation to maintain standard of living",
+            "long_term_impact": "Inflation averaging 2-3% per year significantly impacts retirement savings and should be factored into all retirement planning calculations",
+            "future_projection": "The inflation rate in 2025 is projected to be 3%"
+        },
+        "investment_returns": {
+            "stocks": {
+                "average_historical": 0.10,
+                "risk_level": "high",
+                "recommendation": "Higher allocation recommended for younger investors with longer time horizons"
+            },
+            "bonds": {
+                "average_historical": 0.05,
+                "risk_level": "medium",
+                "recommendation": "Increase allocation as retirement approaches for stability"
+            },
+            "cash": {
+                "average_historical": 0.02,
+                "risk_level": "low",
+                "recommendation": "Keep minimum needed for emergencies and short-term expenses"
+            },
+            "portfolio_diversification": "A diversified retirement portfolio often includes a balanced mix of stocks, bonds, and cash equivalents to mitigate risk",
+            "rebalancing": "Regularly reviewing and rebalancing your retirement portfolio annually can help maintain your desired risk profile"
+        },
+        "withdrawal_rates": {
+            "4_percent_rule": {
+                "description": "The 4% rule suggests withdrawing 4% of your retirement savings in your first year of retirement, then adjusting that amount for inflation each year",
+                "sustainability": "Has historically provided a high probability of portfolio lasting 30+ years"
+            },
+            "dynamic_withdrawal": {
+                "description": "Adjusting withdrawal rates based on market performance",
+                "sustainability": "May extend portfolio longevity during market downturns"
+            },
+            "general_guidance": "Withdrawal strategies, such as the 4% rule, help determine sustainable withdrawal rates from retirement accounts"
+        },
+        "social_security_details": {
+            "full_retirement_age": {
+                "born_1943_1954": 66,
+                "born_1955": 66.2,
+                "born_1956": 66.4,
+                "born_1957": 66.6,
+                "born_1958": 66.8,
+                "born_1959": 66.10,
+                "born_1960_later": 67
+            },
+            "early_benefits": "Can claim as early as age 62 with reduced benefits",
+            "delayed_benefits": "Increases by approximately 8% per year if delayed until age 70",
+            "average_monthly_benefit": "$1,657 (as of 2023)",
+            "income_replacement": "Social Security benefits can typically replace approximately 40% of pre-retirement income for an average earner",
+            "claiming_age_impact": "The age at which you start claiming Social Security significantly impacts your monthly benefit amount; delaying beyond the full retirement age can increase benefits by about 8% annually until age 70"
+        },
+        "tax_advantaged_accounts": {
+            "401k": {
+                "contribution_limit_2023": "$22,500 ($30,000 if age 50+)",
+                "tax_benefit": "Pre-tax contributions reducing current taxable income, tax-deferred growth",
+                "withdrawal_age": "Age 59½ to avoid penalties, Required Minimum Distributions starting at age 73"
+            },
+            "roth_ira": {
+                "contribution_limit_2023": "$6,500 ($7,500 if age 50+)",
+                "income_limits": "Phase-out begins at $138,000 for single filers, $218,000 for married filing jointly",
+                "tax_benefit": "Tax-free growth and qualified withdrawals",
+                "withdrawal_rules": "Tax and penalty-free withdrawals of contributions anytime, earnings withdrawals tax-free after age 59½ if account is at least 5 years old"
+            },
+            "traditional_ira": {
+                "contribution_limit_2023": "$6,500 ($7,500 if age 50+)",
+                "tax_benefit": "Potentially tax-deductible contributions and tax-deferred growth",
+                "withdrawal_age": "Age 59½ to avoid penalties, Required Minimum Distributions starting at age 73"
+            },
+            "general_benefits": "Tax-advantaged retirement accounts, such as IRAs and 401(k)s, can grow tax-deferred or tax-free, depending on account type"
+        },
+        "healthcare_costs": {
+            "average_retirement_healthcare_cost": "$315,000 per couple in retirement (age 65+)",
+            "medicare_eligibility": "Age 65",
+            "long_term_care": "Not covered by Medicare; average annual cost of nursing home care is over $100,000",
+            "cost_impact": "Health care expenses typically represent one of the largest costs during retirement, averaging around $300,000 for couples over retirement years"
+        },
+        "life_expectancy": {
+            "male": 76.1,
+            "female": 81.1,
+            "planning_recommendation": "Plan for age 90-95 to avoid outliving savings",
+            "historical_growth": "In the 20th century, the average American lifespan grew by about 30 years"
+        },
+        "retirement_savings_benchmarks": {
+            "by_age_30": "1x annual salary",
+            "by_age_40": "3x annual salary",
+            "by_age_50": "6x annual salary",
+            "by_age_60": "8x annual salary",
+            "by_age_67": "10x annual salary"
+        },
+        "mortgage_considerations": {
+            "paying_off_before_retirement": "Reduces monthly expenses in retirement",
+            "keeping_mortgage": "May allow for more investment if mortgage rate is lower than potential investment returns",
+            "budget_impact": "If you own a mortgage, you have to spend some money from your salary to pay off the mortgage each month until it all payoff. Let's say we used 28% of our salary to pay for our mortgage every year. Once we pay off the mortgage, we can raise your savings by that 28%",
+            "28_percent_rule": "The 28% mortgage rule states that you should spend 28% or less of your monthly gross income on your mortgage payment (including principal, interest, taxes and insurance). To gauge how much you can afford using this rule, multiply your monthly gross income by 28%"
+        },
+        "emergency_fund": {
+            "pre_retirement": "3-6 months of expenses",
+            "during_retirement": "1-2 years of expenses in cash or cash equivalents recommended",
+            "importance": "Emergency savings equivalent to 6-12 months of living expenses are crucial, even in retirement, to avoid tapping retirement funds prematurely"
+        },
+        "retirement_concerns": {
+            "outliving_savings": "60% of workplace savers worry they will outlive their retirement savings, and 99% of plan sponsors feel responsible for helping to fix that"
+        },
+        "guaranteed_income": {
+            "benefits": "Having guaranteed retirement income can help retirees' wallets – and minds",
+            "spending_increase": "People can get a 22% average increase in potential retirement spending from a target date strategy with an embedded income solution",
+            "mental_health": "93% of workplace savers say having more certainty around retirement income would help their mental health"
+        }
+    }
 }
