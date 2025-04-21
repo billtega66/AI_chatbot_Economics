@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: '../src/index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
@@ -26,7 +26,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'], // Handle .js and .jsx
     modules: [
-      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, 'src'),
       'node_modules'
     ]
   },
