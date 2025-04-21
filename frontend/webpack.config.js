@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -28,6 +30,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html', // Path to your index.html
     }),
+    new webpack.DefinePlugin({
+      'window.API_BASE_URL': JSON.stringify(process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api')
+    })
   ],
   devServer: {
     static: {

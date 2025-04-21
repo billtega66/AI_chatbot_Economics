@@ -1,152 +1,115 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper, Grid, Card, CardContent, Divider, Chip, CircularProgress } from '@mui/material';
-import RetirementHeader from './RetirementHeader';
+import { useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import RetirementGraphs from './RetirementGraphs';
 
 const RetirementDashboard = () => {
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [retirementPlan, setRetirementPlan] = useState(null);
-  const [basicStats, setBasicStats] = useState({
-    yearsLeft: 0,
-    totalSavings: 0
-  });
+  const [basicStats, setBasicStats] = useState(null);
 
-  // Load retirement plan data when component mounts
   useEffect(() => {
-    const loadRetirementPlan = () => {
-      try {
-        // Get stored retirement plan from local storage
-        const storedPlan = localStorage.getItem('retirementPlan');
-        
-        if (storedPlan) {
-          const planData = JSON.parse(storedPlan);
-          setRetirementPlan(planData.retirement_plan?.retirement_plan || "No retirement plan was generated.");
-          setBasicStats({
-            yearsLeft: planData.years_left || 0,
-            totalSavings: planData.total_savings || 0
-          });
-        }
-      } catch (error) {
-        console.error('Error loading retirement plan:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadRetirementPlan();
   }, []);
 
-  // Function to format retirement plan text with sections
-  const formatPlanText = (text) => {
-    if (!text) return [];
-    
-    // Split text by double newlines to identify sections
-    const sections = text.split(/\n\n+/);
-    
-    return sections.map((section, index) => {
-      // Check if section is a heading
-      const isHeading = section.trim().match(/^[A-Z\s]{5,}:?$/);
-      
-      if (isHeading) {
-        return <Typography key={index} variant="h6" fontWeight="bold" mt={3} mb={1}>{section}</Typography>;
+  const loadRetirementPlan = () => {
+    try {
+      const storedPlan = localStorage.getItem('retirementPlan');
+      if (!storedPlan) {
+        navigate('/questionnaire');
+        return;
       }
-      
-      // Check if section starts with a heading (line ending with colon)
-      const lines = section.split('\n');
-      if (lines[0] && lines[0].endsWith(':')) {
-        return (
-          <Box key={index} mt={2} mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">{lines[0]}</Typography>
-            <Typography variant="body1" component="div">
-              {lines.slice(1).map((line, i) => (
-                <React.Fragment key={i}>
-                  {line.trim().startsWith('-') ? (
-                    <Box component="li" ml={2} mt={0.5}>
-                      {line.trim().substring(1)}
-                    </Box>
-                  ) : (
-                    <Typography variant="body1" mt={0.5}>{line}</Typography>
-                  )}
-                </React.Fragment>
-              ))}
-            </Typography>
-          </Box>
-        );
+
+      const planData = JSON.parse(storedPlan);
+      if (!planData || !planData.retirement_plan) {
+        navigate('/questionnaire');
+        return;
       }
+
+      setRetirementPlan(planData.retirement_plan);
       
-      // Regular paragraph
-      return <Typography key={index} variant="body1" paragraph>{section}</Typography>;
-    });
+      // Extract basic stats from the plan data
+      const stats = {
+        age: planData.retirement_plan.user_profile?.age || 0,
+        currentSavings: planData.retirement_plan.user_profile?.current_savings || 0,
+        income: planData.retirement_plan.user_profile?.income || 0,
+        retirementAge: planData.retirement_plan.user_profile?.retirement_age || 0,
+        retirementSavingsGoal: planData.retirement_plan.user_profile?.retirement_goal || 0,
+        requiredSavingsRate: planData.retirement_plan.financial_metrics?.required_savings_rate || 0,
+        currentSavingsRate: planData.retirement_plan.assumptions?.savings_rate || 0
+      };
+      
+      setBasicStats(stats);
+    } catch (error) {
+      console.error('Error loading retirement plan:', error);
+      navigate('/questionnaire');
+    }
   };
 
-  if (loading) {
+  if (!retirementPlan || !basicStats) {
     return (
-      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-        <CircularProgress />
-      </Box>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-lg">Loading your retirement plan...</p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <RetirementHeader />
-      
-      <Box sx={{ mt: 4, mb: 2 }}>
-        <Typography variant="h5" fontWeight="bold">
-          Your Retirement Dashboard
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Your personalized retirement plan overview
-        </Typography>
-      </Box>
-      
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Years Until Retirement
-              </Typography>
-              <Typography variant="h4" color="primary">
-                {basicStats.yearsLeft}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Based on your target retirement age
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Projected Retirement Savings
-              </Typography>
-              <Typography variant="h4" color="primary">
-                ${basicStats.totalSavings.toLocaleString()}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Estimated total by retirement age
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3, mt: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Your Personalized Retirement Plan
-            </Typography>
+    <div className="min-h-screen bg-gray-50">
+      {/* Yellow Top Bar */}
+      <div className="bg-yellow-400 h-16 flex items-center px-4 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-800">Retirement Planner</h1>
+          <button 
+            onClick={() => navigate('/questionnaire')}
+            className="bg-white text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition-colors"
+          >
+            Update Plan
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column - Text Plan */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Current Status</h2>
+              <div className="space-y-2 text-gray-700">
+                <p><span className="font-medium">Age:</span> {basicStats.age}</p>
+                <p><span className="font-medium">Current Savings:</span> ${basicStats.currentSavings.toLocaleString()}</p>
+                <p><span className="font-medium">Annual Income:</span> ${basicStats.income.toLocaleString()}</p>
+                <p><span className="font-medium">Target Retirement Age:</span> {basicStats.retirementAge}</p>
+              </div>
+            </div>
             
-            <Divider sx={{ my: 2 }} />
-            
-            <Box sx={{ mt: 2 }}>
-              {formatPlanText(retirementPlan)}
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Retirement Goals</h2>
+              <div className="space-y-2 text-gray-700">
+                <p><span className="font-medium">Retirement Savings Goal:</span> ${basicStats.retirementSavingsGoal.toLocaleString()}</p>
+                <p><span className="font-medium">Current Savings Rate:</span> {(basicStats.currentSavingsRate * 100).toFixed(1)}%</p>
+                <p><span className="font-medium">Required Savings Rate:</span> {(basicStats.requiredSavingsRate * 100).toFixed(1)}%</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Your Personalized Retirement Plan</h2>
+              <div className="prose max-w-none text-gray-700">
+                <ReactMarkdown>{retirementPlan.plan}</ReactMarkdown>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Graphs */}
+          <div className="space-y-6">
+            <RetirementGraphs basicStats={basicStats} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

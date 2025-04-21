@@ -15,7 +15,8 @@ import {
   InputAdornment,
   FormLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Grid
 } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -23,6 +24,9 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+// Define API base URL with fallback
+const API_BASE_URL = window.API_BASE_URL || 'http://localhost:8000/api';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   maxWidth: 800,
@@ -764,25 +768,41 @@ const QuestionnaireForm = () => {
   };
 
   // Function to submit data to the backend
-  const handleSubmit = async (data) => {
+  const handleSubmit = async () => {
     setIsSubmitting(true);
     setError(null);
     
     try {
-      const response = await axios.post('/api/retirement/plan', data);
+      console.log('Submitting form data:', formData);
       
-      if (response.data && response.data.status === 'success') {
-        // Store the retirement plan in local storage or state management
+      // Validate required fields
+      const requiredFields = ['age', 'currentSavings', 'income', 'retirementAge', 'retirementSavingsGoal'];
+      const missingFields = requiredFields.filter(field => !formData[field]);
+      
+      if (missingFields.length > 0) {
+        throw new Error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+      }
+
+      const response = await axios.post(`${API_BASE_URL}/retirement/plan`, formData);
+      console.log('Response received:', response.data);
+      
+      if (response.data && response.data.retirement_plan) {
+        // Store the retirement plan in local storage
         localStorage.setItem('retirementPlan', JSON.stringify(response.data));
+        console.log('Plan stored in localStorage:', response.data);
         
         // Navigate to the results page
         navigate('/retirement/dashboard');
       } else {
-        throw new Error(response.data.error || 'Failed to generate retirement plan');
+        throw new Error('Invalid response format from server');
       }
     } catch (err) {
       console.error('Error submitting form:', err);
-      setError('There was an error generating your retirement plan. Please try again.');
+      setError(
+        err.response?.data?.detail || 
+        err.message || 
+        'There was an error generating your retirement plan. Please try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -840,7 +860,7 @@ const QuestionnaireForm = () => {
             variant="contained"
             color="primary"
             disabled={isNextDisabled() || isSubmitting}
-            onClick={() => handleSubmit(formData)}
+            onClick={handleSubmit}
           >
             {isSubmitting ? 'Generating Plan...' : 'Submit'}
           </Button>

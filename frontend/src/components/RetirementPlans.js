@@ -1,38 +1,28 @@
 import React from 'react';
 import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Chip } from '@mui/material';
 import RetirementHeader from './RetirementHeader';
+import ReactMarkdown from 'react-markdown';
 
 const RetirementPlans = () => {
-  const plans = [
-    {
-      title: 'Conservative Plan',
-      description: 'Lower risk investments with stable but more modest returns.',
-      monthlyContribution: '$850',
-      estimatedReturn: '4-6%',
-      risk: 'Low',
-      timeHorizon: '25 years'
-    },
-    {
-      title: 'Balanced Plan',
-      description: 'Mix of investments balancing growth with reasonable risk.',
-      monthlyContribution: '$750',
-      estimatedReturn: '6-8%',
-      risk: 'Medium',
-      timeHorizon: '25 years'
-    },
-    {
-      title: 'Aggressive Growth',
-      description: 'Higher risk investments seeking maximum long-term returns.',
-      monthlyContribution: '$650',
-      estimatedReturn: '8-10%',
-      risk: 'High',
-      timeHorizon: '25 years'
-    }
-  ];
+  const saved = localStorage.getItem('retirementPlan');
+  const result = saved ? JSON.parse(saved) : null;
 
   return (
     <Box sx={{ p: 3 }}>
       <RetirementHeader />
+      {result?.retirement_plan?.plan ? (
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h5" fontWeight="bold">📄 Your Personalized Retirement Plan</Typography>
+          <Box sx={{ mt: 2 }}>
+            <ReactMarkdown>{result.retirement_plan.plan}</ReactMarkdown>
+          </Box>
+        </Box>
+      ) : (
+        <Typography color="text.secondary" sx={{ mt: 4 }}>
+          No retirement plan found. Please fill out the questionnaire.
+        </Typography>
+      )}
+
       
       <Box sx={{ mt: 4, mb: 2 }}>
         <Typography variant="h5" fontWeight="bold">
@@ -43,9 +33,9 @@ const RetirementPlans = () => {
         </Typography>
       </Box>
       
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {plans.map((plan, index) => (
-          <Grid item xs={12} md={4} key={index}>
+          <Grid size={{ xs: 12, md: 4 }} key={index}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom>
